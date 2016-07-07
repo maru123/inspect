@@ -4,11 +4,9 @@ results = []
 total = 0
 
 Dir.glob('*.log').each do |file|
-  details = []
-
-  File.open(file).each do |row|
+  details = File.foreach(file).map do |row|
     profiles = row.split(' ')
-    details << {mem: profiles[0].to_i, loc: profiles[1]}
+    {mem: profiles[0].to_i, loc: profiles[1]}
   end
 
   results << { time: file.split('.').first,
